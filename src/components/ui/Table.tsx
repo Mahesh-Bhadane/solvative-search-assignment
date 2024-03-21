@@ -1,10 +1,17 @@
 const Table = ({
   currentItems,
   headings,
+  loading,
+  searchTerm,
 }: {
-  currentItems: { first: string; last: string; handle: string }[];
+  currentItems: any[] | [];
   headings: string[];
+  loading?: boolean;
+  searchTerm?: string;
+  fetcher?: () => Promise<unknown>;
 }) => {
+  if (loading) return <div className="lds-dual-ring"></div>;
+
   return (
     <table>
       <thead>
@@ -15,14 +22,27 @@ const Table = ({
         </tr>
       </thead>
       <tbody>
-        {currentItems.map((item, index) => (
-          <tr key={index}>
-            <td>{index + 1}</td>
-            <td>{item.first}</td>
-            <td>{item.last}</td>
-            <td>{item.handle}</td>
+        {!searchTerm && currentItems.length === 0 ? (
+          <tr>
+            <td className="text-center" colSpan={headings.length}>
+              <p>Start searching</p>
+            </td>
           </tr>
-        ))}
+        ) : currentItems.length === 0 ? (
+          <tr>
+            <td className="text-center" colSpan={headings.length}>
+              No results found
+            </td>
+          </tr>
+        ) : (
+          currentItems.map((item, index) => (
+            <tr key={index}>
+              <td>{index + 1}</td>
+              <td>{item.name}</td>
+              <td>{item.country}</td>
+            </tr>
+          ))
+        )}
       </tbody>
     </table>
   );
