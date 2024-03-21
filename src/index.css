@@ -15,6 +15,9 @@
 
 main {
   padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 input {
@@ -39,7 +42,7 @@ input {
 
 #input-container {
   position: relative;
-  display: inline-block;
+  width: 323px;
 }
 
 #input-container > div {
@@ -63,4 +66,30 @@ input {
 
 #input-container > input {
   padding-right: 70px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+thead {
+  border-bottom: 1px solid rgb(33, 37, 41);
+  font-weight: 700;
+}
+
+th,
+td {
+  padding: 8px;
+  text-align: left;
+}
+
+tbody {
+  td {
+    border-bottom: 1px solid rgb(222, 226, 230);
+  }
+}
+
+th {
+  font-weight: 700;
 }
