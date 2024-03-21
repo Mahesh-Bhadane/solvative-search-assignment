@@ -1,14 +1,11 @@
+import SearchInput from "./components/ui/SearchInput";
 
-import './App.css'
-
-function App() {
- 
-
+const App = () => {
   return (
-    <>
-     <div>APP Page</div>
-    </>
-  )
-}
+    <main>
+      <SearchInput placeholder="Search places..." />
+    </main>
+  );
+};
 
-export default App
+export default App;
