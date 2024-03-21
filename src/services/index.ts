@@ -6,19 +6,21 @@ const options = {
     "X-RapidAPI-Host": import.meta.env.VITE_APP_RAPID_API_HOST,
   },
 };
-console.log("env", import.meta.env.VITE_APP_RAPID_API_KEY);
 
 export const getCitites = async ({
   searchTerm,
-  limit,
+  limit = 5,
+  offset = 0,
 }: {
   searchTerm?: string;
   limit?: number;
+  offset?: number;
 } = {}) => {
   try {
     const params = new URLSearchParams();
     if (searchTerm) params.append("namePrefix", searchTerm);
     if (limit) params.append("limit", limit.toString());
+    if (offset) params.append("offset", offset.toString());
     params.append("countryIds", "IN");
 
     const urlWithParams = new URL(url);
@@ -26,18 +28,19 @@ export const getCitites = async ({
 
     const response = await fetch(urlWithParams.toString(), options);
     const result = (await response.json()) as {
-      data: {
-        id: number;
-        name: string;
-        country: string;
-      }[];
+      data: { id: number; name: string; country: string }[];
+      metadata: { totalCount: number; currentOffset: number };
     };
     const transformedResponse = result?.data?.map(({ id, name, country }) => ({
       id,
       name,
       country,
     }));
-    return transformedResponse;
+    return {
+      data: transformedResponse,
+      total: result.metadata.totalCount,
+      offset: result.metadata.currentOffset,
+    };
   } catch (error) {
     console.error(error);
   }

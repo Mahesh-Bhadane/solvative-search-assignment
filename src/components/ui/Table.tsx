@@ -1,14 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const Table = ({
   currentItems,
   headings,
   loading,
   searchTerm,
 }: {
-  currentItems: any[] | [];
+  currentItems: any[];
   headings: string[];
   loading?: boolean;
   searchTerm?: string;
-  fetcher?: () => Promise<unknown>;
 }) => {
   if (loading) return <div className="lds-dual-ring"></div>;
 
